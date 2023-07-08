@@ -1,8 +1,8 @@
 //
 // Created by Left Ranae on 15.04.2023.
 //
-#ifndef S21_CONTAINERS_OOP_H_
-#define S21_CONTAINERS_OOP_H_
+#ifndef CONTAINERS_SRC_S21_CONTAINERS_OOP_H_
+#define CONTAINERS_SRC_S21_CONTAINERS_OOP_H_
 
 class list {
   public:
@@ -11,4 +11,4 @@ class list {
       int SearchArr();
 };  // class list
 
-#endif  // S21_CONTAINERS_OOP_H_
+#endif  // CONTAINERS_SRC_S21_CONTAINERS_OOP_H_
