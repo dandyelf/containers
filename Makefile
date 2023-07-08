@@ -1,5 +1,7 @@
 # Thanks to Job Vranish (https://spin.atomicobject.com/2016/08/26/makefile-c-projects/)
 TARGET_EXEC := final_program
+CC:=
+
 
 BUILD_DIR := ./build
 SRC_DIRS := ./src
@@ -45,8 +47,8 @@ clean:
 	rm -r $(BUILD_DIR)
 
 clang:
-	clang-format -n src/*.cc
-	clang-format -i src/*.cc
+	clang-format -n src/*.cc src/*.h
+	clang-format -i src/*.cc src/*.h
 
 start:
 	./build/final_program

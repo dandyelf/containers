@@ -5,8 +5,10 @@
 #include "s21_containers_oop.h"
 
 #include <iostream>
+#include <list>
+#include <strstream>
 
-int list::SearchArr() {
+int s21::word::SearchArr() {
   for (int i = 0; i < arr_length; i++)
     if (arr[i] != 0) std::cout << "not empty #" << i << std::endl;
   return 0;
@@ -14,7 +16,7 @@ int list::SearchArr() {
 
 int main(int argc, char const *argv[]) {
   if (argc && argv) {
-    list a;
+    s21::word a;
     a.arr[0] = 1;
     a.arr[3] = 1;
     a.SearchArr();
