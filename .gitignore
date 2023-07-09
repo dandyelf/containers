@@ -1,4 +1,3 @@
 .DS_Store
-build/src/s21_containers_oop.cc.d
-build/src/s21_containers_oop.cc.o
-build/final_program
+build
+
