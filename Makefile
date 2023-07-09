@@ -28,6 +28,8 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 CPPFLAGS := $(INC_FLAGS) -MMD -MP -g -Wall -Wextra -Werror -std=c++17
 
 # The final build step.
+all: $(BUILD_DIR)/$(TARGET_EXEC)
+
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
 	$(CXX) $(OBJS) -o $@ $(LDFLAGS)
 
@@ -52,6 +54,8 @@ clang:
 
 start:
 	./build/final_program
+
+t: clang all start
 
 # Include the .d makefiles. The - at the front suppresses the errors of missing
 # Makefiles. Initially, all the .d files will be missing, and we don't want those
