@@ -5,5 +5,5 @@
 #include "s21_vector.h"
 
 void s21::Vector::PushBack() {
-  if (!size_ && !capaciti_) std::cout << "PushBack" << std::endl;
+  if (!size_ && !capaciti_) std::cout << "PushBack: done" << std::endl;
 }

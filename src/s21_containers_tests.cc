@@ -19,7 +19,7 @@ class word {
 
 int s21_test::word::SearchArr() {
   for (int i = 0; i < arr_length; i++)
-    if (arr[i] != 0) std::cout << "not empty #" << i << std::endl;
+    if (arr[i] != 0) std::cout << "SearchArr: not empty #" << i << std::endl;
   return 0;
 }
 
@@ -29,8 +29,8 @@ int main(int argc, char const *argv[]) {
     a.arr[0] = 1;
     a.arr[3] = 1;
     a.SearchArr();
+    s21::Vector A;
+    A.PushBack();
   }
-  s21::Vector A;
-  A.PushBack();
   return 0;
 }
