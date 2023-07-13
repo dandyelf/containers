@@ -2,10 +2,6 @@
 // Created by Left Ranae on 15.04.2023.
 //
 
-#include <iostream>
-#include <list>
-#include <strstream>
-
 #include "s21_containers.h"
 
 namespace s21_test {
@@ -29,8 +25,11 @@ int main(int argc, char const *argv[]) {
     a.arr[0] = 1;
     a.arr[3] = 1;
     a.SearchArr();
-    s21::Vector A;
-    A.PushBack();
+    s21::Vector<int> v = {1, 2, 3, 4, 5};
+    v.push_back(6);
+    for (size_t i = 0; i < v.size(); i++) {
+      std::cout << v.at(i);
+    }
   }
   return 0;
 }
