@@ -7,11 +7,4 @@
 
 #include "s21_vector.h"
 
-namespace s21 {
-class test {
-  int a;
-  int b;
-};  // Class test
-}  // namespace s21
-
 #endif  // CONTAINERS_SRC_S21_CONTAINERS_H_

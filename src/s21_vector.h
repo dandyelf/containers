@@ -9,11 +9,6 @@
 namespace s21 {
 template <class T>
 class Vector {
-  // private attributes
- private:
-  size_t m_size;
-  size_t m_capacity;
-  T *arr;
   // public attribures
  public:
   // member types
@@ -23,9 +18,7 @@ class Vector {
   using iterator = T *;
   using const_iterator = const T *;
   using size_type = size_t;
-  // private method
- private:
-  void reserve_more_capacity(size_type size);
+
   // public methods
  public:
   // default constructor (simplified syntax for assigning values to attributes)
@@ -56,6 +49,14 @@ class Vector {
   value_type at(size_type i);
   // append new element
   void push_back(value_type v);
+
+ private:
+  // private attributes
+  size_t m_size;
+  size_t m_capacity;
+  T *arr;
+  // private method
+  void reserve_more_capacity(size_type size);
 };
 }  // namespace s21
 #endif  // CONTAINERS_SRC_S21_VECTOR_H_
