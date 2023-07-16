@@ -20,7 +20,6 @@ class Vector {
   using size_type = size_t;
 
   // public methods
- public:
   // default constructor (simplified syntax for assigning values to attributes)
   Vector() : m_size(0U), m_capacity(0U), arr(nullptr) {}
   // parametrized constructor for fixed size vector (explicit was used in order
@@ -42,7 +41,6 @@ class Vector {
   // destructor
   ~Vector() { delete[] arr; }
 
-  // some method examples
   // size getter
   size_type size();
   // element accessor
@@ -52,9 +50,9 @@ class Vector {
 
  private:
   // private attributes
-  size_t m_size;
-  size_t m_capacity;
-  T *arr;
+  size_t m_size{};
+  size_t m_capacity{};
+  T *arr{};
   // private method
   void reserve_more_capacity(size_type size);
 };

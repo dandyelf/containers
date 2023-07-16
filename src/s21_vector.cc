@@ -5,7 +5,7 @@
 #include "s21_vector.h"
 
 template <typename T>
-void s21::Vector<T>::reserve_more_capacity(size_t size) {
+void s21::Vector<T>::reserve_more_capacity(size_type size) {
   if (size > m_capacity) {
     value_type *buff = new value_type[size];
     for (size_t i = 0; i < m_size; ++i) buff[i] = std::move(arr[i]);
@@ -40,7 +40,7 @@ T s21::Vector<T>::at(size_type i) {
 }
 
 template <typename T>
-void s21::Vector<T>::push_back(T v) {
+void s21::Vector<T>::push_back(value_type v) {
   if (m_size == m_capacity) {
     reserve_more_capacity(m_size * 2);
   }
