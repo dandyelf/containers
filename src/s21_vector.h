@@ -57,13 +57,12 @@ class Vector {
   void reserve_more_capacity(size_type size);
   Vector &operator=(Vector &&v) noexcept {
     if (this != &v) return *this;
-    Vector tmp(v);
+    delete this->arr;
     this->m_capacity = 0;
     this->m_size = 0;
-    delete this->arr;
-    std::swap(this->m_capacity, tmp.m_capacity);
-    std::swap(this->m_size, tmp.m_size);
-    std::swap(this->arr, tmp.arr);
+    std::swap(this->m_capacity, v.m_capacity);
+    std::swap(this->m_size, v.m_size);
+    std::swap(this->arr, v.arr);
     return *this;
   }
 };
