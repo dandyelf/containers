@@ -50,11 +50,22 @@ class Vector {
 
  private:
   // private attributes
-  size_t m_size{};
-  size_t m_capacity{};
+  size_type m_size{};
+  size_type m_capacity{};
   T *arr{};
   // private method
   void reserve_more_capacity(size_type size);
+  Vector &operator=(Vector &&v) noexcept {
+    if (this != &v) return *this;
+    Vector tmp(v);
+    this->m_capacity = 0;
+    this->m_size = 0;
+    delete this->arr;
+    std::swap(this->m_capacity, tmp.m_capacity);
+    std::swap(this->m_size, tmp.m_size);
+    std::swap(this->arr, tmp.arr);
+    return *this;
+  }
 };
 }  // namespace s21
 #endif  // CONTAINERS_SRC_S21_VECTOR_H_
