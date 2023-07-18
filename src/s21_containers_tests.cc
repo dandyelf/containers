@@ -7,7 +7,7 @@
 #include "s21_containers.h"
 #include "s21_matrix_oop.h"
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char const* argv[]) {
   if (argc && argv) {
     s21::Vector<int> v = {1, 2, 3, 4, 5};
     v.push_back(6);
@@ -22,6 +22,7 @@ int main(int argc, char const *argv[]) {
     s21::Vector<S21Matrix> m(6);
     std::cout << "Tut" << std::endl;
     std::vector<S21Matrix> m1(6);
+    std::vector<S21Matrix>* vec = new std::vector<S21Matrix>();
   }
   return 0;
 }
