@@ -2,36 +2,26 @@
 // Created by Left Ranae on 15.04.2023.
 //
 
+#include <vector>
+
 #include "s21_containers.h"
-
-namespace s21_test {
-class word {
- public:
-  int arr_length = 5;
-  int arr[5];
-  int SearchArr();
-};  // class list
-}  // namespace s21_test
-
-int s21_test::word::SearchArr() {
-  for (int i = 0; i < arr_length; i++)
-    if (arr[i] != 0) std::cout << "SearchArr: not empty #" << i << std::endl;
-  return 0;
-}
+#include "s21_matrix_oop.h"
 
 int main(int argc, char const *argv[]) {
   if (argc && argv) {
-    s21_test::word a;
-    a.arr[0] = 1;
-    a.arr[3] = 1;
-    a.SearchArr();
     s21::Vector<int> v = {1, 2, 3, 4, 5};
     v.push_back(6);
     for (size_t i = 0; i < v.size(); i++) {
       std::cout << v.at(i);
     }
-    s21::Vector<s21_test::word> b(6);
-    s21::Vector<s21_test::word> c;
+    std::vector<int> b = {7, 8, 9};
+    b.push_back(10);
+    for (size_t i = 0; i < b.size(); i++) {
+      std::cout << b.at(i);
+    }
+    s21::Vector<S21Matrix> m(6);
+    std::cout << "Tut" << std::endl;
+    std::vector<S21Matrix> m1(6);
   }
   return 0;
 }

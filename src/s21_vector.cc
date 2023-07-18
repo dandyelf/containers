@@ -7,11 +7,15 @@
 template <typename T>
 void s21::Vector<T>::reserve_more_capacity(size_type size) {
   if (size > m_capacity) {
-    value_type *buff = new value_type[size];
-    for (size_t i = 0; i < m_size; ++i) buff[i] = std::move(arr[i]);
-    delete[] arr;
-    arr = buff;
-    m_capacity = size;
+    try {
+      value_type *buff = new value_type[size];
+      for (size_t i = 0; i < m_size; ++i) buff[i] = std::move(arr[i]);
+      delete[] arr;
+      arr = buff;
+      m_capacity = size;
+    } catch (const std::exception &e) {
+      std::cerr << e.what() << '\n';
+    }
   }
 }
 
@@ -38,6 +42,14 @@ template <typename T>
 T s21::Vector<T>::at(size_type i) {
   return arr[i];
 }
+
+// template <typename T>
+// void s21::Vector<T>::push_back(value_type v) {
+//   if (m_size == m_capacity) {
+//     reserve_more_capacity(m_size * 2);
+//   }
+//   arr[m_size++] = v;
+// }
 
 template <typename T>
 void s21::Vector<T>::push_back(value_type v) {
