@@ -22,7 +22,9 @@ int main(int argc, char const* argv[]) {
     s21::Vector<S21Matrix> m(6);
     std::cout << "Tut" << std::endl;
     std::vector<S21Matrix> m1(6);
-    std::vector<S21Matrix>* vec = new std::vector<S21Matrix>();
+    std::vector<S21Matrix>* vec = new std::vector<S21Matrix>(6);
+    vec->reserve(10);
+    std::cout << vec->max_size() << std::endl;
   }
   return 0;
 }

@@ -55,6 +55,8 @@ class Vector {
   T *arr{};
   // private method
   void reserve_more_capacity(size_type size);
+  void reserv(size_type size);
+
   Vector &operator=(Vector &&v) noexcept {
     if (this != &v) return *this;
     delete this->arr;

@@ -43,13 +43,8 @@ T s21::Vector<T>::at(size_type i) {
   return arr[i];
 }
 
-// template <typename T>
-// void s21::Vector<T>::push_back(value_type v) {
-//   if (m_size == m_capacity) {
-//     reserve_more_capacity(m_size * 2);
-//   }
-//   arr[m_size++] = v;
-// }
+template <typename T>
+void s21::Vector<T>::reserv(size_type size) {}
 
 template <typename T>
 void s21::Vector<T>::push_back(value_type v) {
