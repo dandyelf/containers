@@ -9,22 +9,10 @@
 
 int main(int argc, char const* argv[]) {
   if (argc && argv) {
-    s21::Vector<int> v = {1, 2, 3, 4, 5};
-    v.push_back(6);
-    for (size_t i = 0; i < v.size(); i++) {
-      std::cout << v.at(i);
-    }
-    std::vector<int> b = {7, 8, 9};
-    b.push_back(10);
-    for (size_t i = 0; i < b.size(); i++) {
-      std::cout << b.at(i);
-    }
-    s21::Vector<S21Matrix> m(6);
+    s21::Vector<std::string> m;
     std::cout << "Tut" << std::endl;
-    std::vector<S21Matrix> m1(6);
-    std::vector<S21Matrix>* vec = new std::vector<S21Matrix>(6);
-    vec->reserve(10);
-    std::cout << vec->max_size() << std::endl;
+    size_t k = 10;
+    m.Reserve(k);
   }
   return 0;
 }

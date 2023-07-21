@@ -34,25 +34,47 @@ s21::Vector<T>::Vector(std::initializer_list<value_type> const &items) {
 };
 
 template <typename T>
-size_t s21::Vector<T>::size() {
+size_t s21::Vector<T>::Size() const noexcept {
   return m_size;
 }
 
 template <typename T>
-T s21::Vector<T>::at(size_type i) {
+T s21::Vector<T>::At(size_type i) {
   return arr[i];
 }
 
 template <typename T>
-void s21::Vector<T>::reserv(size_type size) {}
-
-template <typename T>
-void s21::Vector<T>::push_back(value_type v) {
+void s21::Vector<T>::Push_back(value_type v) {
   if (m_size == m_capacity) {
     reserve_more_capacity(m_size * 2);
   }
   arr[m_size++] = v;
 }
+
+// template <typename T>
+// void s21::Vector<T>::Reserve(size_type new_cap) {
+//   if (new_cap < m_capacity) return;
+//   iterator newarr =
+//       reinterpret_cast<T *>(::new unsigned char[new_cap * sizeof(T)]);
+//   size_type i = 0;
+//   try {
+//     for (; i < m_size; ++i) {
+//       new (newarr + i) T(arr[i]);  //  placement new
+//     }
+//   } catch (...) {
+//     for (size_type j = 0; j < i; ++j) {
+//       (newarr + j)->~T();
+//     }
+//     delete[] reinterpret_cast<unsigned char *>(newarr);
+//     throw;
+//   }
+//   for (size_type m = 0; m < m_size; ++m) {
+//     (arr + m)->~T();
+//   }
+//   delete[] reinterpret_cast<unsigned char *>(arr);
+//   arr = newarr;
+//   m_capacity = new_cap;
+// }
 
 // externalizing template instances for correct linking, feel free to find more
 // information
