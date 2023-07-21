@@ -4,6 +4,8 @@
 
 #include "s21_vector.h"
 
+#include "s21_matrix_oop.h"
+
 template <typename T>
 void s21::Vector<T>::reserve_more_capacity(size_type size) {
   if (size > m_capacity) {
@@ -59,7 +61,7 @@ void s21::Vector<T>::Push_back(value_type v) {
 //   size_type i = 0;
 //   try {
 //     for (; i < m_size; ++i) {
-//       new (newarr + i) T(arr[i]);  //  placement new
+//       ::new (newarr + i) T(arr[i]);  //  placement new
 //     }
 //   } catch (...) {
 //     for (size_type j = 0; j < i; ++j) {
@@ -71,7 +73,7 @@ void s21::Vector<T>::Push_back(value_type v) {
 //   for (size_type m = 0; m < m_size; ++m) {
 //     (arr + m)->~T();
 //   }
-//   delete[] reinterpret_cast<unsigned char *>(arr);
+//   if (m_size > 0) delete[] reinterpret_cast<unsigned char *>(arr);
 //   arr = newarr;
 //   m_capacity = new_cap;
 // }
@@ -79,3 +81,4 @@ void s21::Vector<T>::Push_back(value_type v) {
 // externalizing template instances for correct linking, feel free to find more
 // information
 template class s21::Vector<int>;
+template class s21::Vector<S21Matrix>;

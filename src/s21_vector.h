@@ -40,7 +40,13 @@ class Vector {
 
   // destructor
   ~Vector() {
-    if (m_size) delete[] arr;
+    if (m_size = m_capacity) {
+      delete[] arr;
+    } else {
+      for (size_type j = 0; j < m_size; ++j) {
+        (arr + j)->~T();
+      }
+    }
   }
   // size getter
   size_type Size() const noexcept;
@@ -57,30 +63,27 @@ class Vector {
     iterator newarr =
         reinterpret_cast<T *>(::new unsigned char[new_cap * sizeof(T)]);
     size_type i = 0;
-    std::cout << "Tut1" << std::endl;
     try {
       for (; i < m_size; ++i) {
-        new (newarr + i) T(arr[i]);  //  placement new
-        std::cout << "Tut2" << std::endl;
+        ::new (newarr + i) T(arr[i]);  //  placement new
       }
     } catch (...) {
       for (size_type j = 0; j < i; ++j) {
         (newarr + j)->~T();
-        std::cout << "Tut3" << std::endl;
       }
       delete[] reinterpret_cast<unsigned char *>(newarr);
-      std::cout << "Tut4" << std::endl;
       throw;
     }
     for (size_type m = 0; m < m_size; ++m) {
       (arr + m)->~T();
-      std::cout << "Tut5" << std::endl;
     }
     if (m_size > 0) delete[] reinterpret_cast<unsigned char *>(arr);
-    std::cout << "Tut6" << std::endl;
     arr = newarr;
-    std::cout << "Tut7" << std::endl;
     m_capacity = new_cap;
+  }
+
+  void Resise(size_type new_size) {
+    if (new_size < m_size) return;
   }
 
  private:

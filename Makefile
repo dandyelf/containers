@@ -56,7 +56,11 @@ clang:
 start:
 	./build/final_program
 
-t: clang all start
+valgrind:
+	CK_FORK=no valgrind --vgdb=no --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=RESULT_VALGRIND.txt ./build/final_program
+	cat RESULT_VALGRIND.txt
+
+t: clang all start valgrind
 
 # Include the .d makefiles. The - at the front suppresses the errors of missing
 # Makefiles. Initially, all the .d files will be missing, and we don't want those

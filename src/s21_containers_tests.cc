@@ -9,10 +9,12 @@
 
 int main(int argc, char const* argv[]) {
   if (argc && argv) {
-    s21::Vector<std::string> m;
+    s21::Vector<S21Matrix> m(6);
+    S21Matrix A(3, 3);
+    S21Matrix B(4, 4);
+    m.At(1) = A;
+    m.At(2) = B;
     std::cout << "Tut" << std::endl;
-    size_t k = 10;
-    m.Reserve(k);
   }
   return 0;
 }
