@@ -15,6 +15,8 @@ int main(int argc, char const* argv[]) {
     m.At(1) = A;
     m.At(2) = B;
     std::cout << "Tut" << std::endl;
+    // m.Reserve(10);
+    std::cout << "Tut" << std::endl;
   }
   return 0;
 }
