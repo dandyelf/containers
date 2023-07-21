@@ -40,12 +40,13 @@ class Vector {
 
   // destructor
   ~Vector() {
-    if (m_size = m_capacity) {
+    if (m_size == m_capacity) {
       delete[] arr;
     } else {
       for (size_type j = 0; j < m_size; ++j) {
         (arr + j)->~T();
       }
+      delete[] reinterpret_cast<unsigned char *>(arr);
     }
   }
   // size getter
@@ -77,7 +78,7 @@ class Vector {
     for (size_type m = 0; m < m_size; ++m) {
       (arr + m)->~T();
     }
-    if (m_size > 0) delete[] reinterpret_cast<unsigned char *>(arr);
+    if (m_size < m_capacity) delete[] reinterpret_cast<unsigned char *>(arr);
     arr = newarr;
     m_capacity = new_cap;
   }
