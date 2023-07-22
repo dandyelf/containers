@@ -7,19 +7,22 @@
 #include "s21_containers.h"
 #include "s21_matrix_oop.h"
 
-int main(int argc, char const* argv[]) {
+int main(int argc, char** argv) {
   if (argc && argv) {
-    // s21::Vector<S21Matrix> m(6);
-    // S21Matrix A(3, 3);
-    // S21Matrix B(4, 4);
-    // m.At(1) = A;
-    // m.At(2) = B;
-    s21::Vector<std::string> v = {"aaa", "bbbb"};
-    std::cout << v.At(0) << std::endl;
-    // v.Reserve(3);
-    // v.Reserve(6);
-    // v.Reserve(9);
-    std::cout << v.At(1) << std::endl;
+    size_t u{};
+    s21::Vector<std::string> v(1000);
+    v.At(0) = "AAAAAAAAAAAAAAAa";
+    for (size_t i = 0; i < 3; i++) {
+      std::cin >> u;
+      if (!u) {
+        u = 1500;
+      }
+      try {
+        v.Reserve(u);
+        std::cout << v.At(0) << std::endl;
+      } catch (const std::exception& e) {
+        std::cerr << e.what() << '\n';
+      }
+    }
   }
-  return 0;
 }
