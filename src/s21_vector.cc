@@ -41,7 +41,10 @@ size_t s21::Vector<T>::Size() const noexcept {
 }
 
 template <typename T>
-T s21::Vector<T>::At(size_type i) {
+T &s21::Vector<T>::At(size_type i) {
+  if (i > m_size) {
+    throw std::out_of_range("Index out of range");
+  }
   return arr[i];
 }
 
@@ -81,4 +84,5 @@ void s21::Vector<T>::Push_back(value_type v) {
 // externalizing template instances for correct linking, feel free to find more
 // information
 template class s21::Vector<int>;
+template class s21::Vector<std::string>;
 template class s21::Vector<S21Matrix>;

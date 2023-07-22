@@ -24,8 +24,23 @@ class Vector {
   Vector() {}
   // parametrized constructor for fixed size vector (explicit was used in order
   // to avoid automatic type conversion)
-  explicit Vector(size_type n)
-      : m_size(n), m_capacity(n), arr(n ? new T[n] : nullptr) {}
+  // explicit Vector(size_type n)
+  //     : m_size(n), m_capacity(n), arr(n ? new T[n] : nullptr) {}
+  explicit Vector(size_type n) : m_size(n), m_capacity(n), arr(nullptr) {
+    arr = reinterpret_cast<T *>(new unsigned char[n * sizeof(T)]);
+    size_type i = 0;
+    try {
+      for (; i < n; ++i) {
+        new (arr + i) T();  //  placement new
+      }
+    } catch (...) {
+      for (size_type j = 0; j < i; ++j) {
+        (arr + j)->~T();
+      }
+      delete[] reinterpret_cast<unsigned char *>(arr);
+      throw;
+    }
+  }
   // initializer list constructor (allows creating lists with initializer lists,
   // see main.cpp)
   Vector(std::initializer_list<value_type> const &items);
@@ -40,19 +55,15 @@ class Vector {
 
   // destructor
   ~Vector() {
-    if (m_size == m_capacity) {
-      delete[] arr;
-    } else {
-      for (size_type j = 0; j < m_size; ++j) {
-        (arr + j)->~T();
-      }
-      delete[] reinterpret_cast<unsigned char *>(arr);
+    for (size_type j = 0; j <= m_size; ++j) {
+      (arr + j)->~T();
     }
+    delete[] reinterpret_cast<unsigned char *>(arr);
   }
   // size getter
   size_type Size() const noexcept;
   // element accessor
-  value_type At(size_type i);
+  value_type &At(size_type i);
   // capacity getter
   size_type Capacity() const noexcept { return m_capacity; }
 
@@ -60,13 +71,13 @@ class Vector {
   void Push_back(value_type v);
   // rezerv new capacity
   void Reserve(size_type new_cap) {
-    if (new_cap < m_capacity) return;
+    if (new_cap <= m_capacity) return;
     iterator newarr =
-        reinterpret_cast<T *>(::new unsigned char[new_cap * sizeof(T)]);
+        reinterpret_cast<T *>(new unsigned char[new_cap * sizeof(T)]);
     size_type i = 0;
     try {
       for (; i < m_size; ++i) {
-        ::new (newarr + i) T(arr[i]);  //  placement new
+        new (newarr + i) T(arr[i]);  //  placement new
       }
     } catch (...) {
       for (size_type j = 0; j < i; ++j) {
@@ -95,16 +106,16 @@ class Vector {
   // private method
   void reserve_more_capacity(size_type size);
 
-  Vector &operator=(Vector &&v) noexcept {
-    if (this != &v) return *this;
-    delete this->arr;
-    this->m_capacity = 0;
-    this->m_size = 0;
-    std::swap(this->m_capacity, v.m_capacity);
-    std::swap(this->m_size, v.m_size);
-    std::swap(this->arr, v.arr);
-    return *this;
-  }
+  // Vector &operator=(Vector &&v) noexcept {
+  //   if (this != &v) return *this;
+  //   delete this->arr;
+  //   this->m_capacity = 0;
+  //   this->m_size = 0;
+  //   std::swap(this->m_capacity, v.m_capacity);
+  //   std::swap(this->m_size, v.m_size);
+  //   std::swap(this->arr, v.arr);
+  //   return *this;
+  // }
 };
 }  // namespace s21
 #endif  // CONTAINERS_SRC_S21_VECTOR_H_
