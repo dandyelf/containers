@@ -55,7 +55,7 @@ class Vector {
 
   // destructor
   ~Vector() {
-    for (size_type j = 0; j <= m_size; ++j) {
+    for (size_type j = 0; j < m_size; ++j) {
       (arr + j)->~T();
     }
     delete[] reinterpret_cast<unsigned char *>(arr);
@@ -89,7 +89,7 @@ class Vector {
     for (size_type m = 0; m < m_size; ++m) {
       (arr + m)->~T();
     }
-    if (m_size < m_capacity) delete[] reinterpret_cast<unsigned char *>(arr);
+    delete[] reinterpret_cast<unsigned char *>(arr);
     arr = newarr;
     m_capacity = new_cap;
   }

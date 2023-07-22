@@ -14,11 +14,11 @@ int main(int argc, char const* argv[]) {
     // S21Matrix B(4, 4);
     // m.At(1) = A;
     // m.At(2) = B;
-    s21::Vector<std::string> v(2);
-    v.At(0) = "aa";
-    v.At(1) = "bb";
+    s21::Vector<std::string> v = {"aaa", "bbbb"};
     std::cout << v.At(0) << std::endl;
-    v.Reserve(3);
+    // v.Reserve(3);
+    // v.Reserve(6);
+    // v.Reserve(9);
     std::cout << v.At(1) << std::endl;
   }
   return 0;
