@@ -4,8 +4,6 @@
 
 #include "s21_vector.h"
 
-#include "s21_matrix_oop.h"
-
 template <typename T>
 void s21::Vector<T>::reserve_more_capacity(size_type size) {
   if (size > m_capacity) {
@@ -60,4 +58,3 @@ void s21::Vector<T>::Push_back(value_type v) {
 // information
 template class s21::Vector<int>;
 template class s21::Vector<std::string>;
-template class s21::Vector<S21Matrix>;

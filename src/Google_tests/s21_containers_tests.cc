@@ -2,13 +2,13 @@
 // Created by Left Ranae on 15.04.2023.
 //
 
-#include <vector>
+#include <iostream>
 
-#include "s21_containers.h"
-#include "s21_matrix_oop.h"
+#include "gtest/gtest.h"
+#include "../s21_containers.h"
 
-int main(int argc, char** argv) {
-  if (argc && argv) {
+TEST(test_case_name, test_name)
+{
     size_t u{};
     s21::Vector<std::string> v(1000);
     v.At(0) = "AAAAAAAAAAAAAAAa";
@@ -24,5 +24,22 @@ int main(int argc, char** argv) {
         std::cerr << e.what() << '\n';
       }
     }
-  }
 }
+
+int main(int argc, char **argv) {
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
+}
+
+
+
+
+
+
+
+
+// int main(int argc, char** argv) {
+//   if (argc && argv) {
+//     
+//   }
+// }

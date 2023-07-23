@@ -1,11 +1,12 @@
 # Thanks to Job Vranish (https://spin.atomicobject.com/2016/08/26/makefile-c-projects/)
 TARGET_EXEC := final_program
-CC:=gcc
+CC:=g++
+CPP_STD:=-std=c++17
 
-
+LIBPATH = -L/usr/local/
 BUILD_DIR := ./build
 SRC_DIRS := ./src
-
+GTEST_DIR := /usr/local/libgtest_main.a
 # Find all the C and C++ files we want to compile
 # Note the single quotes around the * expressions. The shell will incorrectly expand these otherwise, but we want to send the * directly to the find command.
 SRCS := $(shell find $(SRC_DIRS) -name '*.cc' -or -name '*.c' -or -name '*.s')
@@ -25,7 +26,7 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 # The -MMD and -MP flags together generate Makefiles for us!
 # These files will have .d instead of .o as the output.
-CPPFLAGS := $(INC_FLAGS) -MMD -MP -g -Wall -Wextra -std=c++17 # -Werror
+CPPFLAGS := $(INC_FLAGS) -MMD -MP -g -Wall -Wextra $(CPP_STD) $(LIBPATH) -lgtest -lgtest_main -pthread # -Werror
 
 
 # The final build step.
