@@ -7,7 +7,7 @@
 #include <iostream>
 
 namespace s21 {
-template <class T>
+template <typename T>
 class Vector {
   // public attribures
  public:
@@ -43,7 +43,16 @@ class Vector {
   }
   // initializer list constructor (allows creating lists with initializer lists,
   // see main.cpp)
-  Vector(std::initializer_list<value_type> const &items);
+  Vector(std::initializer_list<value_type> const &items)
+      : Vector(items.size()) {
+    int i = 0;
+    for (auto it = items.begin(); it != items.end(); it++) {
+      arr[i] = *it;
+      i++;
+    }
+    m_size = items.size();
+    m_capacity = items.size();
+  }
   // copy constructor with simplified syntax
   Vector(const Vector &v)
       : m_size(v.m_size), m_capacity(v.m_capacity), arr(v.arr) {}
@@ -63,7 +72,7 @@ class Vector {
   // size getter
   size_type Size() const noexcept;
   // element accessor
-  value_type &At(size_type i);
+  T &At(size_type i);
   // capacity getter
   size_type Capacity() const noexcept { return m_capacity; }
 
@@ -94,7 +103,7 @@ class Vector {
     m_capacity = new_cap;
   }
 
-  void Resise(size_type new_size);
+  // void Resise(size_type new_size);
 
  private:
   // private attributes
