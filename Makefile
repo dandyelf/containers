@@ -27,14 +27,13 @@ clang:
 	clang-format -i src/*.cc src/*.h
 
 start:
-	./build/final_program
+	./$(BUILD_DIR)/test.out
 
 valgrind:
 	CK_FORK=no valgrind --vgdb=no --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=RESULT_VALGRIND.txt $(BUILD_DIR)/test.out
 	cat RESULT_VALGRIND.txt
 
 t: clang all start valgrind
-
 
 # Final build
 $(TARGET): $(OBJS)
