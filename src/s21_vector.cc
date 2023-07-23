@@ -4,7 +4,14 @@
 
 #include "s21_vector.h"
 
-template <typename T>
+template <class T>
+void s21::Vector<T>::Resise(size_type new_size) {
+  {
+    if (new_size < m_size) return;
+  }
+}
+
+template <class T>
 void s21::Vector<T>::reserve_more_capacity(size_type size) {
   if (size > m_capacity) {
     try {
@@ -21,7 +28,7 @@ void s21::Vector<T>::reserve_more_capacity(size_type size) {
 
 // initializer list constructor (allows creating lists with initializer lists,
 // see main.cpp)
-template <typename T>
+template <class T>
 s21::Vector<T>::Vector(std::initializer_list<value_type> const &items)
     : Vector(items.size()) {
   int i = 0;
@@ -33,12 +40,12 @@ s21::Vector<T>::Vector(std::initializer_list<value_type> const &items)
   m_capacity = items.size();
 };
 
-template <typename T>
+template <class T>
 size_t s21::Vector<T>::Size() const noexcept {
   return m_size;
 }
 
-template <typename T>
+template <class T>
 T &s21::Vector<T>::At(size_type i) {
   if (i > m_size) {
     throw std::out_of_range("Index out of range");
@@ -46,7 +53,7 @@ T &s21::Vector<T>::At(size_type i) {
   return arr[i];
 }
 
-template <typename T>
+template <class T>
 void s21::Vector<T>::Push_back(value_type v) {
   if (m_size == m_capacity) {
     reserve_more_capacity(m_size * 2);
@@ -56,5 +63,5 @@ void s21::Vector<T>::Push_back(value_type v) {
 
 // externalizing template instances for correct linking, feel free to find more
 // information
-template class s21::Vector<int>;
-template class s21::Vector<std::string>;
+// template class s21::Vector<int>;
+// template class s21::Vector<std::string>;

@@ -26,7 +26,7 @@ class Vector {
   // to avoid automatic type conversion)
   // explicit Vector(size_type n)
   //     : m_size(n), m_capacity(n), arr(n ? new T[n] : nullptr) {}
-  explicit Vector(size_type n) : m_size(n), m_capacity(n), arr(nullptr) {
+  Vector(size_type n) : m_size(n), m_capacity(n), arr(nullptr) {
     arr = reinterpret_cast<T *>(new unsigned char[n * sizeof(T)]);
     size_type i = 0;
     try {
@@ -94,9 +94,7 @@ class Vector {
     m_capacity = new_cap;
   }
 
-  void Resise(size_type new_size) {
-    if (new_size < m_size) return;
-  }
+  void Resise(size_type new_size);
 
  private:
   // private attributes
