@@ -24,9 +24,7 @@ class Vector {
   Vector() {}
   // parametrized constructor for fixed size vector (explicit was used in order
   // to avoid automatic type conversion)
-  // explicit Vector(size_type n)
-  //     : m_size(n), m_capacity(n), arr(n ? new T[n] : nullptr) {}
-  Vector(size_type n) : m_size(n), m_capacity(n), arr(nullptr) {
+  explicit Vector(size_type n) : m_size_(n), m_capacity_(n), arr(nullptr) {
     arr = reinterpret_cast<T *>(new unsigned char[n * sizeof(T)]);
     size_type i = 0;
     try {
@@ -41,51 +39,62 @@ class Vector {
       throw;
     }
   }
-  // initializer list constructor (allows creating lists with initializer lists,
-  // see main.cpp)
-  Vector(std::initializer_list<value_type> const &items)
+  // initializer list constructor allows creating lists with initializer lists
+  explicit Vector(std::initializer_list<value_type> const &items)
       : Vector(items.size()) {
     int i = 0;
     for (auto it = items.begin(); it != items.end(); it++) {
       arr[i] = *it;
       i++;
     }
-    m_size = items.size();
-    m_capacity = items.size();
-  }
+    m_size_ = items.size();
+    m_capacity_ = items.size();
+  };
   // copy constructor with simplified syntax
   Vector(const Vector &v)
-      : m_size(v.m_size), m_capacity(v.m_capacity), arr(v.arr) {}
+      : m_size_(v.m_size_), m_capacity_(v.m_capacity_), arr(v.arr) {}
   // move constructor with simplified syntax
-  Vector(Vector &&v) : m_size(v.m_size), m_capacity(v.m_capacity), arr(v.arr) {
+  Vector(Vector &&v)
+      : m_size_(v.m_size_), m_capacity_(v.m_capacity_), arr(v.arr) {
     v.arr = nullptr;
-    v.m_size = 0;
+    v.m_size_ = 0;
   };
 
   // destructor
   ~Vector() {
-    for (size_type j = 0; j < m_size; ++j) {
+    for (size_type j = 0; j < m_size_; ++j) {
       (arr + j)->~T();
     }
     delete[] reinterpret_cast<unsigned char *>(arr);
   }
   // size getter
-  size_type Size() const noexcept;
+  size_type Size() const noexcept { return m_size_; }
   // element accessor
-  T &At(size_type i);
+  T &At(size_type i) {
+    if (i > m_size_) {
+      throw std::out_of_range("Index out of range");
+    }
+    return arr[i];
+  }
   // capacity getter
-  size_type Capacity() const noexcept { return m_capacity; }
+  size_type Capacity() const noexcept { return m_capacity_; }
 
   // append new element
-  void Push_back(value_type v);
+  void Push_back(value_type v) {
+    if (m_size_ == m_capacity_) {
+      reserve_more_capacity(m_size_ * 2);
+    }
+    arr[m_size_++] = v;
+  }
+
   // rezerv new capacity
   void Reserve(size_type new_cap) {
-    if (new_cap <= m_capacity) return;
+    if (new_cap <= m_capacity_) return;
     iterator newarr =
         reinterpret_cast<T *>(new unsigned char[new_cap * sizeof(T)]);
     size_type i = 0;
     try {
-      for (; i < m_size; ++i) {
+      for (; i < m_size_; ++i) {
         new (newarr + i) T(arr[i]);  //  placement new
       }
     } catch (...) {
@@ -95,34 +104,38 @@ class Vector {
       delete[] reinterpret_cast<unsigned char *>(newarr);
       throw;
     }
-    for (size_type m = 0; m < m_size; ++m) {
+    for (size_type m = 0; m < m_size_; ++m) {
       (arr + m)->~T();
     }
     delete[] reinterpret_cast<unsigned char *>(arr);
     arr = newarr;
-    m_capacity = new_cap;
+    m_capacity_ = new_cap;
   }
 
   // void Resise(size_type new_size);
 
  private:
   // private attributes
-  size_type m_size{};
-  size_type m_capacity{};
+  size_type m_size_{};
+  size_type m_capacity_{};
   T *arr{};
   // private method
-  void reserve_more_capacity(size_type size);
+  void reserve_more_capacity(size_type size) {
+    if (size > m_capacity_) {
+      value_type *buff = new value_type[size];
+      for (size_t i = 0; i < m_size_; ++i) buff[i] = std::move(arr[i]);
+      delete[] arr;
+      arr = buff;
+      m_capacity_ = size;
+    }
+  }
 
-  // Vector &operator=(Vector &&v) noexcept {
-  //   if (this != &v) return *this;
-  //   delete this->arr;
-  //   this->m_capacity = 0;
-  //   this->m_size = 0;
-  //   std::swap(this->m_capacity, v.m_capacity);
-  //   std::swap(this->m_size, v.m_size);
-  //   std::swap(this->arr, v.arr);
-  //   return *this;
-  // }
+  constexpr Vector &operator=(Vector &&v) noexcept {
+    if (this != &v) {
+      std::swap(v.arr, nullptr);
+    }
+    return *this;
+  }
 };
 }  // namespace s21
 #endif  // CONTAINERS_SRC_S21_VECTOR_H_

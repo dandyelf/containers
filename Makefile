@@ -20,6 +20,7 @@ test: s21_containers.a $(GT_OBJS)
 	$(CXX) $(CXXFLAGS) $(GT_OBJS) $(BUILD_DIR)/$(TARGET) -o $(BUILD_DIR)/test.out $(GT_FLAGS)
 	./$(BUILD_DIR)/test.out
 
+.PHONY: clean
 clean:
 	rm -r $(BUILD_DIR)
 
