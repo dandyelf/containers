@@ -2,10 +2,8 @@
 // Created by Left Ranae on 15.04.2023.
 //
 #include <iostream>
-
 #include "gtest/gtest.h"
 #include "../s21_stack.h"
-#include <string>
 
 namespace s21vector {
 namespace  tests {

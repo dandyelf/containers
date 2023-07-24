@@ -1,14 +1,10 @@
 //
 // Created by Left Ranae on 15.04.2023.
 //
-
 #include <iostream>
-
 #include "gtest/gtest.h"
 #include "../s21_vector.h"
 #include <string>
-#include <vector>
-
 
 namespace s21vector {
 namespace  tests {

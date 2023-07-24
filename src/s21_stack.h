@@ -4,11 +4,8 @@
 #ifndef CONTAINERS_SRC_S21_STACK_H_
 #define CONTAINERS_SRC_S21_STSCK_H_
 
-#include <iostream>
-
-using namespace std;
-
 #include <iomanip>
+#include <iostream>
 
 template <typename T>
 class Stack {
@@ -68,7 +65,7 @@ bool Stack<T>::pop() {
 template <typename T>
 void Stack<T>::printStack() {
   for (int ix = size - 1; ix >= 0; ix--)
-    cout << "|" << setw(4) << stackPtr[ix] << endl;
+    std::cout << "|" << std::setw(4) << stackPtr[ix] << std::endl;
 }
 
 #endif  // CONTAINERS_SRC_S21_STACK_H_
