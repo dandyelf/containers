@@ -4,7 +4,7 @@
 #include <iostream>
 #include "gtest/gtest.h"
 #include "../s21_vector.h"
-#include <string>
+#include <string>-
 
 namespace s21vector {
 namespace  tests {
