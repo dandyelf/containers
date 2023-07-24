@@ -112,7 +112,7 @@ class Vector {
     }
     return *this;
   }
-};
+};  // class vector
 
 template <class T>
 void Vector<T>::Reserve(size_type new_cap) {

@@ -26,6 +26,7 @@ class s21VectorTests : public ::testing::Test {
 // Tests that the Foo::Bar() method does Abc.
 TEST(VectorTests, StandartConstructor)
 {
+  s21::Vector<std::string>   as;
   s21::Vector<int> v(2);
   v.Reserve(10);
   v.At(1) = 1;
