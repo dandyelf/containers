@@ -7,7 +7,7 @@
 #include <iostream>
 
 namespace s21 {
-template <class T>
+template <typename T>
 class Vector {
   // public attribures
  public:
@@ -61,7 +61,12 @@ class Vector {
   };
 
   // destructor
-  ~Vector() { Clear(); }
+  ~Vector() {
+    for (size_type j = 0; j < m_size_; ++j) {
+      (arr + j)->~T();
+    }
+    delete[] reinterpret_cast<unsigned char *>(arr);
+  }
   // size getter
   size_type Size() const noexcept { return m_size_; }
   // element accessor
@@ -77,25 +82,35 @@ class Vector {
   // append new element
   void Push_back(value_type v) {
     if (m_size_ == m_capacity_) {
-      Reserve(m_size_ * 2);
+      reserve_more_capacity(m_size_ * 2);
     }
-    new (arr + m_size_ + 1) T();  //  placement new
     arr[m_size_++] = v;
-    m_size_++;
-  }
-
-  void Clear() {
-    for (size_type j = 0; j < m_size_; ++j) {
-      (arr + j)->~T();
-    }
-    delete[] reinterpret_cast<unsigned char *>(arr);
-    arr = nullptr;
-    m_size_ = 0;
-    m_capacity_ = 0;
   }
 
   // rezerv new capacity
-  void Reserve(size_type new_cap);
+  void Reserve(size_type new_cap) {
+    if (new_cap <= m_capacity_) return;
+    iterator newarr =
+        reinterpret_cast<T *>(new unsigned char[new_cap * sizeof(T)]);
+    size_type i = 0;
+    try {
+      for (; i < m_size_; ++i) {
+        new (newarr + i) T(arr[i]);  //  placement new
+      }
+    } catch (...) {
+      for (size_type j = 0; j < i; ++j) {
+        (newarr + j)->~T();
+      }
+      delete[] reinterpret_cast<unsigned char *>(newarr);
+      throw;
+    }
+    for (size_type m = 0; m < m_size_; ++m) {
+      (arr + m)->~T();
+    }
+    delete[] reinterpret_cast<unsigned char *>(arr);
+    arr = newarr;
+    m_capacity_ = new_cap;
+  }
 
   // void Resise(size_type new_size);
 
@@ -105,6 +120,15 @@ class Vector {
   size_type m_capacity_{};
   T *arr{};
   // private method
+  void reserve_more_capacity(size_type size) {
+    if (size > m_capacity_) {
+      value_type *buff = new value_type[size];
+      for (size_t i = 0; i < m_size_; ++i) buff[i] = std::move(arr[i]);
+      delete[] arr;
+      arr = buff;
+      m_capacity_ = size;
+    }
+  }
 
   constexpr Vector &operator=(Vector &&v) noexcept {
     if (this != &v) {
@@ -112,32 +136,6 @@ class Vector {
     }
     return *this;
   }
-};  // class vector
-
-template <class T>
-void Vector<T>::Reserve(size_type new_cap) {
-  if (new_cap <= m_capacity_) return;
-  iterator newarr =
-      reinterpret_cast<T *>(new unsigned char[new_cap * sizeof(T)]);
-  size_type i = 0;
-  try {
-    for (; i < m_size_; ++i) {
-      new (newarr + i) T(arr[i]);  //  placement new
-    }
-  } catch (...) {
-    for (size_type j = 0; j < i; ++j) {
-      (newarr + j)->~T();
-    }
-    delete[] reinterpret_cast<unsigned char *>(newarr);
-    throw;
-  }
-  for (size_type m = 0; m < m_size_; ++m) {
-    (arr + m)->~T();
-  }
-  delete[] reinterpret_cast<unsigned char *>(arr);
-  arr = newarr;
-  m_capacity_ = new_cap;
-}
-
+};
 }  // namespace s21
 #endif  // CONTAINERS_SRC_S21_VECTOR_H_

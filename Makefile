@@ -20,6 +20,16 @@ test: s21_containers.a $(GT_OBJS)
 	$(CXX) $(CXXFLAGS) $(GT_OBJS) $(BUILD_DIR)/$(TARGET) -o $(BUILD_DIR)/test.out $(GT_FLAGS)
 	./$(BUILD_DIR)/test.out
 
+# Final build
+$(TARGET): $(OBJS)
+	ar -rc $(BUILD_DIR)/$(TARGET) $(OBJS)
+	ranlib $(BUILD_DIR)/$(TARGET)
+
+# Build step for C++ source
+$(BUILD_DIR)/%.cc.o: %.cc
+	mkdir -p $(dir $@)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+
 .PHONY: clean
 clean:
 	rm -r $(BUILD_DIR)
@@ -37,15 +47,6 @@ valgrind:
 
 t: clean clang test valgrind
 
-# Final build
-$(TARGET): $(OBJS)
-	ar -rc $(BUILD_DIR)/$(TARGET) $(OBJS)
-	ranlib $(BUILD_DIR)/$(TARGET)
-
-# Build step for C++ source
-$(BUILD_DIR)/%.cc.o: %.cc
-	mkdir -p $(dir $@)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 # gcov_report: s21_containers_tests.o
 # ifeq ($(OS), Linux)
