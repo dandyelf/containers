@@ -22,23 +22,13 @@ class Vector {
   // public methods
   // default constructor (simplified syntax for assigning values to attributes)
   Vector() {}
+
   // parametrized constructor for fixed size vector (explicit was used in order
   // to avoid automatic type conversion)
   explicit Vector(size_type n) : m_size_(n), m_capacity_(n), arr(nullptr) {
-    arr = reinterpret_cast<T *>(new unsigned char[n * sizeof(T)]);
-    size_type i = 0;
-    try {
-      for (; i < n; ++i) {
-        new (arr + i) T();  //  placement new
-      }
-    } catch (...) {
-      for (size_type j = 0; j < i; ++j) {
-        (arr + j)->~T();
-      }
-      delete[] reinterpret_cast<unsigned char *>(arr);
-      throw;
-    }
+    CreateVector();
   }
+
   // initializer list constructor allows creating lists with initializer lists
   explicit Vector(std::initializer_list<value_type> const &items)
       : Vector(items.size()) {
@@ -49,17 +39,22 @@ class Vector {
     }
     m_size_ = items.size();
     m_capacity_ = items.size();
-  };
+  }
+
   // copy constructor with simplified syntax
-  Vector(const Vector &v)
-      : m_size_(v.m_size_), m_capacity_(v.m_capacity_), arr(v.arr) {}
+  Vector(const Vector &v) : m_size_(v.m_size_), m_capacity_(v.m_capacity_) {
+    if (this != &v) {
+      CreateVector();
+    }
+    // std::memcpy(matrix_[i], other_p[i], (cols_ * sizeof(double)));
+  }
+
   // move constructor with simplified syntax
   Vector(Vector &&v)
       : m_size_(v.m_size_), m_capacity_(v.m_capacity_), arr(v.arr) {
     v.arr = nullptr;
     v.m_size_ = 0;
   };
-
   // destructor
   ~Vector() {
     for (size_type j = 0; j < m_size_; ++j) {
@@ -135,6 +130,22 @@ class Vector {
       std::swap(v.arr, nullptr);
     }
     return *this;
+  }
+
+  void CreateVector() {
+    arr = reinterpret_cast<T *>(new unsigned char[m_size_ * sizeof(T)]);
+    size_type i = 0;
+    try {
+      for (; i < m_size_; ++i) {
+        new (arr + i) T();  //  placement new
+      }
+    } catch (...) {
+      for (size_type j = 0; j < i; ++j) {
+        (arr + j)->~T();
+      }
+      delete[] reinterpret_cast<unsigned char *>(arr);
+      throw;
+    }
   }
 };
 }  // namespace s21
