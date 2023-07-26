@@ -25,12 +25,12 @@ class Vector {
 
   // parametrized constructor for fixed size vector (explicit was used in order
   // to avoid automatic type conversion)
-  explicit Vector(size_type n) : m_size_(n), m_capacity_(n), arr(nullptr) {
+  Vector(size_type n) : m_size_(n), m_capacity_(n), arr(nullptr) {
     CreateVector();
   }
 
   // initializer list constructor allows creating lists with initializer lists
-  explicit Vector(std::initializer_list<value_type> const &items)
+  Vector(std::initializer_list<value_type> const &items)
       : Vector(items.size()) {
     int i = 0;
     for (auto it = items.begin(); it != items.end(); it++) {
@@ -77,9 +77,14 @@ class Vector {
   // append new element
   void Push_back(value_type v) {
     if (m_size_ == m_capacity_) {
-      reserve_more_capacity(m_size_ * 2);
+      try {
+        Reserve(m_size_ * 2 + 1);
+      } catch (...) {
+        throw;
+      }
     }
-    arr[m_size_++] = v;
+    new (arr + m_size_) T(v);  //  placement new
+    ++m_size_;
   }
 
   // rezerv new capacity

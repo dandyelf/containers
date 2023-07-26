@@ -24,7 +24,7 @@ TEST(StackTests, StandartConstructor)
   Stack <int> myStack(5);
  
     // заполняем стек
-    std::cout << "Заталкиваем элементы в стек: ";
+    std::cout << "\nЗаталкиваем элементы в стек: \n";
     int ct = 0;
     int temp = 4354;
     while (ct++ != 5)

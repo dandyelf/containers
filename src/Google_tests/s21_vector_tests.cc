@@ -39,8 +39,18 @@ TEST(VectorTests, ParamConstructor)
 TEST(VectorTests, InitializerListConstructor)
 {
   // s21::Vector<std::string> v = {"AAAA", "BBBBB"};
-  std::vector<std::string> v1 = {"AAAA", "BBBBB"};
-  std::cout << v1.at(0) ;
+  s21::Vector<std::string> v1 = {"AAAA", "BBBBB"};
+}
+
+TEST(VectorTests, PushBack)
+{
+  s21::Vector<std::string> v1(6);
+  std::string str("CCCCCCCCC");
+  v1.Reserve(3);
+  v1.Push_back(str);
+  std::cout << v1.Size();
+
+  // std::cout << v1.At(0);
 }
 
 }  // namespace
