@@ -5,6 +5,7 @@
 #include "gtest/gtest.h"
 #include "../s21_vector.h"
 #include <string>
+#include <vector>
 
 namespace s21vector {
 namespace  tests {
@@ -40,6 +41,8 @@ TEST(VectorTests, InitializerListConstructor)
 {
   // s21::Vector<std::string> v = {"AAAA", "BBBBB"};
   s21::Vector<std::string> v1 = {"AAAA", "BBBBB"};
+  std::vector<std::string> jo = {"AAAAAAA", "BBBBBB", "CCCCCCC"};
+  std::cout << *jo.begin();
 }
 
 TEST(VectorTests, PushBack)
@@ -48,9 +51,14 @@ TEST(VectorTests, PushBack)
   std::string str("CCCCCCCCC");
   v1.Reserve(3);
   v1.Push_back(str);
-  std::cout << v1.Size();
+  // std::cout << v1.Size();
 
   // std::cout << v1.At(0);
+}
+
+TEST(VectorTests, BeginEnd)
+{
+
 }
 
 }  // namespace

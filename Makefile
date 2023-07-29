@@ -11,7 +11,6 @@ GT_OBJS := $(GT_SRCS:%=$(BUILD_DIR)/%.o)
 GT_FLAGS = -lgtest
 
 OS := $(shell uname -s)
-OS2 := $(shell cat /etc/*-release | grep ID=a)
 
 all: s21_containers.a
 
@@ -42,8 +41,17 @@ start:
 	./$(BUILD_DIR)/test.out
 
 valgrind:
+ifeq ($(OS), Darwin)
+	echo $(OS)
+	echo "For Aple --------------------"
+	leaks -atExit -- ./build/test.out
+else
+	echo $(OS)
+	echo "For Ubuntu --------------------"
 	CK_FORK=no valgrind --vgdb=no --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=RESULT_VALGRIND.txt build/test.out
 	grep errors RESULT_VALGRIND.txt
+endif
+	
 
 t: clean clang test valgrind
 
