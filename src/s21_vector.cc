@@ -150,11 +150,12 @@ class Vector {
   }
 
   template <class Iter>
-    class VectotIterator {
-        friend class Vector;
-    public:
-        typedef Iter iterator_type;
-        typedef std::input_iterator_tag iterator_category;
-    }
+  class VectotIterator {
+    friend class Vector;
+
+   public:
+    typedef Iter iterator_type;
+    typedef std::input_iterator_tag iterator_category;
+  };
 };
 }  // namespace s21
