@@ -3,7 +3,7 @@
 //
 #include <iostream>
 #include "gtest/gtest.h"
-#include "../s21_vector.h"
+#include "../s21_vector.cc"
 #include <string>
 #include <vector>
 
@@ -42,7 +42,6 @@ TEST(VectorTests, InitializerListConstructor)
   // s21::Vector<std::string> v = {"AAAA", "BBBBB"};
   s21::Vector<std::string> v1 = {"AAAA", "BBBBB"};
   std::vector<std::string> jo = {"AAAAAAA", "BBBBBB", "CCCCCCC"};
-  std::cout << *jo.begin();
 }
 
 TEST(VectorTests, PushBack)
