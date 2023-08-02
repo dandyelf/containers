@@ -42,6 +42,10 @@ TEST(VectorTests, InitializerListConstructor)
   // s21::Vector<std::string> v = {"AAAA", "BBBBB"};
   s21::Vector<std::string> v1 = {"AAAA", "BBBBB"};
   std::vector<std::string> jo = {"AAAAAAA", "BBBBBB", "CCCCCCC"};
+  std::string s1("BUUU");
+  std::string s2("BAAA");
+  s21::Vector <std::string> va = {s1, s2};
+  std::cout << *jo.begin() << std::endl;
 }
 
 TEST(VectorTests, PushBack)

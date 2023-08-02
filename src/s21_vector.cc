@@ -17,6 +17,20 @@ class Vector {
   using const_iterator = const T *;
   using size_type = size_t;
 
+  template <class Iter>
+  class VectotIterator {
+    friend class Vector;
+
+   public:
+    typedef Iter iterator_type;
+    typedef std::input_iterator_tag iterator_category;
+    typedef iterator_type value_type;
+    typedef ptrdiff_t difference_type;
+    typedef iterator_type &reference;
+    typedef iterator_type *pointer;
+    iterator_type *value;
+  };
+
   // public methods
   // default constructor (simplified syntax for assigning values to attributes)
   Vector() {}
@@ -148,14 +162,5 @@ class Vector {
       throw;
     }
   }
-
-  template <class Iter>
-  class VectotIterator {
-    friend class Vector;
-
-   public:
-    typedef Iter iterator_type;
-    typedef std::input_iterator_tag iterator_category;
-  };
 };
 }  // namespace s21
