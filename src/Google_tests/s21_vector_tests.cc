@@ -62,7 +62,6 @@ TEST(VectorTests, PushBack)
 TEST(VectorTests, BeginEnd)
 {
   s21::Vector<std::string> ju (6);
-  
 }
 
 }  // namespace

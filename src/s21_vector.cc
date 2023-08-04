@@ -13,8 +13,8 @@ class Vector {
   using value_type = T;
   using reference = T &;
   using const_reference = const T &;
-  using iterator = T *;
-  using const_iterator = const T *;
+  // using iterator = T *;
+  // using const_iterator = const T *;
   using size_type = size_t;
   // public methods
   // default constructor (simplified syntax for assigning values to attributes)
@@ -87,8 +87,7 @@ class Vector {
   // rezerv new capacity
   void Reserve(size_type new_cap) {
     if (new_cap <= m_capacity_) return;
-    iterator newarr =
-        reinterpret_cast<T *>(new unsigned char[new_cap * sizeof(T)]);
+    T *newarr = reinterpret_cast<T *>(new unsigned char[new_cap * sizeof(T)]);
     size_type i = 0;
     try {
       for (; i < m_size_; ++i) {
@@ -133,8 +132,11 @@ class Vector {
    public:
     VectorIterator(const VectorIterator &it) : value(it.value) {}
   };  //  class Iter
-  // typedef VectorIterator iterator<Vector> iterator;
-  // typedef VectorIterator iterator<Vector> const_iterator;
+  typedef VectorIterator<Vector> iterator;
+  typedef VectorIterator<Vector> const_iterator;
+
+  iterator begin() { return iterator(this->arr[0]); }
+  iterator end() { return iterator(nullptr); }
   // private method
   void reserve_more_capacity(size_type size) {
     if (size > m_capacity_) {
