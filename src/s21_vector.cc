@@ -132,11 +132,7 @@ class Vector {
    public:
     VectorIterator(const VectorIterator &it) : value(it.value) {}
   };  //  class Iter
-  typedef VectorIterator<Vector> iterator;
-  typedef VectorIterator<Vector> const_iterator;
 
-  iterator begin() { return iterator(this->arr[0]); }
-  iterator end() { return iterator(nullptr); }
   // private method
   void reserve_more_capacity(size_type size) {
     if (size > m_capacity_) {
@@ -170,5 +166,12 @@ class Vector {
       throw;
     }
   }
+
+ public:
+  typedef VectorIterator<Vector> iterator;
+  typedef VectorIterator<Vector> const_iterator;
+
+  iterator begin() { return arr[0]; }
+  iterator end() { return iterator(nullptr); }
 };
 }  // namespace s21
