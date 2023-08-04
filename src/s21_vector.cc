@@ -16,21 +16,6 @@ class Vector {
   using iterator = T *;
   using const_iterator = const T *;
   using size_type = size_t;
-
-  template <class Iter>
-  class VectotIterator {
-    friend class Vector;
-
-   public:
-    typedef Iter iterator_type;
-    typedef std::input_iterator_tag iterator_category;
-    typedef iterator_type value_type;
-    typedef ptrdiff_t difference_type;
-    typedef iterator_type &reference;
-    typedef iterator_type *pointer;
-    iterator_type *value;
-  };
-
   // public methods
   // default constructor (simplified syntax for assigning values to attributes)
   Vector() {}
@@ -129,6 +114,27 @@ class Vector {
   size_type m_size_{};
   size_type m_capacity_{};
   T *arr{};
+  template <class Iter>
+  class VectorIterator {
+    friend class Vector;
+
+   public:
+    typedef Iter iterator_type;
+    typedef std::input_iterator_tag iterator_category;
+    typedef iterator_type value_type;
+    typedef ptrdiff_t difference_type;
+    typedef iterator_type &reference;
+    typedef iterator_type *pointer;
+    iterator_type *value;
+
+   private:
+    VectorIteraror(Iter *p) : value(p) {}
+
+   public:
+    VectotIterator(const VectorIterator &it) : value(it.value) {}
+  };  //  class Iter
+  // typedef VectorIterator iterator<Vector> iterator;
+  // typedef VectorIterator iterator<Vector> const_iterator;
   // private method
   void reserve_more_capacity(size_type size) {
     if (size > m_capacity_) {
