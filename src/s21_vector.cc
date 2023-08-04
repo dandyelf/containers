@@ -128,10 +128,10 @@ class Vector {
     iterator_type *value;
 
    private:
-    VectorIteraror(Iter *p) : value(p) {}
+    VectorIterator(Iter *p) : value(p) {}
 
    public:
-    VectotIterator(const VectorIterator &it) : value(it.value) {}
+    VectorIterator(const VectorIterator &it) : value(it.value) {}
   };  //  class Iter
   // typedef VectorIterator iterator<Vector> iterator;
   // typedef VectorIterator iterator<Vector> const_iterator;
