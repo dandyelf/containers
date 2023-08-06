@@ -110,8 +110,10 @@ class Vector {
     arr = newarr;
     m_capacity_ = new_cap;
   }
+
   T *begin() { return &arr[0]; }
-  T *end() { return nullptr; }
+
+  T *end() { return &arr[m_size_]; }
 
  private:
   // private attributes
