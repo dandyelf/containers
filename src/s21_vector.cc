@@ -4,6 +4,7 @@
 
 #include "s21_vector.h"
 
+
 namespace s21 {
 template <typename T>
 class Vector {
