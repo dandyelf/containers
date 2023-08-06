@@ -16,6 +16,7 @@ class Vector {
   // using iterator = T *;
   // using const_iterator = const T *;
   using size_type = size_t;
+  
   // public methods
   // default constructor (simplified syntax for assigning values to attributes)
   Vector() {}
