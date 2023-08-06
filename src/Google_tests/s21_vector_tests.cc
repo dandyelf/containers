@@ -45,7 +45,8 @@ TEST(VectorTests, InitializerListConstructor)
   std::string s1("BUUU");
   std::string s2("BAAA");
   s21::Vector <std::string> va = {s1, s2};
-  std::cout << *jo.begin() << std::endl;
+  // std::cout << *jo.begin() << std::endl;
+  // std::vector<std::string>::iterator it = jo.begin();
 }
 
 TEST(VectorTests, PushBack)
@@ -62,6 +63,12 @@ TEST(VectorTests, PushBack)
 TEST(VectorTests, BeginEnd)
 {
   s21::Vector<std::string> ju (6);
+  ju.At(0) = "AAAAA";
+  ju.At(1) = "BBBBB";
+  s21::Vector<std::string>::iterator it = ju.begin();
+  std::cout << *it << std::endl;
+  it++;
+  std::cout << *it << std::endl;
 }
 
 }  // namespace
