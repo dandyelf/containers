@@ -6,7 +6,6 @@
 #include "../s21_vector.cc"
 #include <string>
 #include <vector>
-#include <iterator>
 
 namespace s21vector {
 namespace  tests {
@@ -63,7 +62,6 @@ TEST(VectorTests, PushBack)
 TEST(VectorTests, BeginEnd)
 {
   s21::Vector<std::string> ju (6);
-  auto it = ju.begin();
 }
 
 }  // namespace

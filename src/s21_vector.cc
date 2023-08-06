@@ -4,15 +4,10 @@
 
 #include "s21_vector.h"
 
-
-namespace s21 {
-
-template <class T>
+template <class Iter>
 class VectorIterator;
 
-// template <class T>
-// class VectorConstIterator;
-
+namespace s21 {
 template <typename T>
 class Vector {
   // public attribures
@@ -21,10 +16,9 @@ class Vector {
   using value_type = T;
   using reference = T &;
   using const_reference = const T &;
-  using iterator = VectorIterator<T>;
-  // using const_iterator = VectorConstIterator<T>;
+  // using iterator = T *;
+  // using const_iterator = const T *;
   using size_type = size_t;
-  
   // public methods
   // default constructor (simplified syntax for assigning values to attributes)
   Vector() {}
@@ -122,12 +116,12 @@ class Vector {
   size_type m_size_{};
   size_type m_capacity_{};
   T *arr{};
-  template <class T>
+  template <class Iter>
   class VectorIterator {
     friend class Vector;
 
    public:
-    typedef T iterator_type;
+    typedef Iter iterator_type;
     typedef std::input_iterator_tag iterator_category;
     typedef iterator_type value_type;
     typedef ptrdiff_t difference_type;
@@ -136,12 +130,16 @@ class Vector {
     iterator_type *value;
 
    private:
-    VectorIterator(T *p) : value(p) {}
+    VectorIterator(Iter *p) : value(p) {}
 
    public:
     VectorIterator(const VectorIterator &it) : value(it.value) {}
   };  //  class Iter
+  typedef VectorIterator<Vector> iterator;
+  typedef VectorIterator<Vector> const_iterator;
 
+  iterator begin() { return iterator(this->arr[0]); }
+  iterator end() { return iterator(nullptr); }
   // private method
   void reserve_more_capacity(size_type size) {
     if (size > m_capacity_) {
@@ -175,12 +173,5 @@ class Vector {
       throw;
     }
   }
-
- public:
-  // typedef VectorIterator<Vector> iterator;
-  // typedef VectorIterator<Vector> const_iterator;
-
-  iterator begin() { return arr[0]; }
-  iterator end() { return iterator(nullptr); }
 };
 }  // namespace s21
