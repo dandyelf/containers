@@ -110,8 +110,8 @@ class Vector {
     arr = newarr;
     m_capacity_ = new_cap;
   }
-  iterator begin() { return &arr[0]; }
-  iterator end() { return nullptr; }
+  T *begin() { return &arr[0]; }
+  T *end() { return nullptr; }
 
  private:
   // private attributes
@@ -119,15 +119,6 @@ class Vector {
   size_type m_capacity_{};
   T *arr{};
   // private method
-  void reserve_more_capacity(size_type size) {
-    if (size > m_capacity_) {
-      value_type *buff = new value_type[size];
-      for (size_t i = 0; i < m_size_; ++i) buff[i] = std::move(arr[i]);
-      delete[] arr;
-      arr = buff;
-      m_capacity_ = size;
-    }
-  }
 
   constexpr Vector &operator=(Vector &&v) noexcept {
     if (this != &v) {
