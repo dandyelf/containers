@@ -45,6 +45,7 @@ class Vector {
   Vector(const Vector &v) : m_size_(v.m_size_), m_capacity_(v.m_capacity_) {
     if (this != &v) {
       CreateVector();
+      Reserve(m_capacity_);
     }
     // std::memcpy(matrix_[i], other_p[i], (cols_ * sizeof(double)));
   }
