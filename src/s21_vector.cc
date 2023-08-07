@@ -34,7 +34,7 @@ class Vector {
       : Vector(items.size()) {
     int i = 0;
     for (auto it = items.begin(); it != items.end(); it++) {
-      arr[i] = *it;
+      arr[i] = std::move(*it);
       i++;
     }
     m_size_ = items.size();
@@ -79,10 +79,14 @@ class Vector {
     if (m_size_ == m_capacity_) {
       try {
         Reserve(m_size_ * 2 + 1);
-        new (arr + m_size_) T(v);  //  placement new
       } catch (...) {
         throw;
       }
+    }
+    try {
+      new (arr + m_size_) T(v);
+    } catch (...) {
+      throw;
     }
     ++m_size_;
   }
@@ -93,7 +97,7 @@ class Vector {
     size_type i = 0;
     try {
       for (; i < m_size_; ++i) {
-        new (newarr + i) T(arr[i]);  //  placement new
+        new (newarr + i) T(std::move(arr[i]));  //  placement new
       }
     } catch (...) {
       for (size_type j = 0; j < i; ++j) {
@@ -110,9 +114,19 @@ class Vector {
     m_capacity_ = new_cap;
   }
 
-  T *begin() { return &arr[0]; }
+  iterator begin() { return &arr[0]; }
 
-  T *end() { return &arr[m_size_]; }
+  iterator end() { return &arr[m_size_]; }
+
+  const_iterator begin() const {
+    const_reference tmp = arr[0];
+    return &tmp;
+  }
+
+  const_iterator end() const {
+    const_reference tmp = arr[0];
+    return &tmp;
+  }
 
  private:
   // private attributes
