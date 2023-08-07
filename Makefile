@@ -31,11 +31,11 @@ $(BUILD_DIR)/%.cc.o: %.cc
 
 .PHONY: clean
 clean:
-	rm -r $(BUILD_DIR)
+	rm -rf $(BUILD_DIR)/*
 
 clang:
-	clang-format -n src/*.cc src/*.h
-	clang-format -i src/*.cc src/*.h
+	clang-format -n src/*.cc src/*.h src/Google_tests/*.cc
+	clang-format -i src/*.cc src/*.h src/Google_tests/*.cc
 
 start:
 	./$(BUILD_DIR)/test.out

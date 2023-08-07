@@ -64,7 +64,7 @@ bool Stack<T>::pop() {
 // вывод стека на экран
 template <typename T>
 void Stack<T>::printStack() {
-  for (int ix = size - 1; ix >= 0; ix--) std::cout << "ok" << std::endl;
+  // for (int ix = size - 1; ix >= 0; ix--) std::cout << "ok" << std::endl;
 }
 
 #endif  // CONTAINERS_SRC_S21_STACK_H_

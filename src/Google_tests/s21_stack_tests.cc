@@ -2,11 +2,12 @@
 // Created by Left Ranae on 15.04.2023.
 //
 #include <iostream>
-#include "gtest/gtest.h"
+
 #include "../s21_stack.h"
+#include "gtest/gtest.h"
 
 namespace s21vector {
-namespace  tests {
+namespace tests {
 namespace {
 
 // The fixture for testing class Foo.
@@ -19,39 +20,31 @@ class s21StackTests : public ::testing::Test {
 };
 
 // Tests that the Foo::Bar() method does Abc.
-TEST(StackTests, StandartConstructor)
-{
-  Stack <int> myStack(5);
- 
-    // заполняем стек
-    std::cout << "\nЗаталкиваем элементы в стек: \n";
-    int ct = 0;
-    int temp = 4354;
-    while (ct++ != 5)
-    {
-        temp *= ct;
-        myStack.push(temp);
-    }
- 
-    myStack.printStack(); // вывод стека на экран
- 
-    std::cout << "\nУдаляем два элемента из стека:\n";
- 
-    myStack.pop(); // удаляем элемент из стека
-    myStack.pop(); // удаляем элемент из стека
-    myStack.printStack(); // вывод стека на экран
+TEST(StackTests, StandartConstructor) {
+  Stack<int> myStack(5);
+
+  // заполняем стек
+  // std::cout << "\nЗаталкиваем элементы в стек: \n";
+  int ct = 0;
+  int temp = 4354;
+  while (ct++ != 5) {
+    temp *= ct;
+    myStack.push(temp);
+  }
+
+  myStack.printStack();  // вывод стека на экран
+
+  // std::cout << "\nУдаляем два элемента из стека:\n";
+
+  myStack.pop();         // удаляем элемент из стека
+  myStack.pop();         // удаляем элемент из стека
+  myStack.printStack();  // вывод стека на экран
 }
 
-TEST(StackTests, ParamConstructor)
-{
-  
-}
+TEST(StackTests, ParamConstructor) {}
 
-TEST(StackTests, InitializerListConstructor)
-{
- 
-}
+TEST(StackTests, InitializerListConstructor) {}
 
 }  // namespace
-}  // namespace vector
-}  // namespace testsmake
+}  // namespace tests
+}  // namespace s21vector

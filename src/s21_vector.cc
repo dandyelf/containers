@@ -64,6 +64,8 @@ class Vector {
   }
   // size getter
   size_type Size() const noexcept { return m_size_; }
+  // capacity getter
+  size_type Capacity() const noexcept { return m_capacity_; }
   // element accessor
   T &At(size_type i) {
     if (i > m_size_) {
@@ -71,8 +73,6 @@ class Vector {
     }
     return arr[i];
   }
-  // capacity getter
-  size_type Capacity() const noexcept { return m_capacity_; }
 
   // append new element
   void Push_back(value_type v) {
@@ -86,7 +86,6 @@ class Vector {
     }
     ++m_size_;
   }
-
   // rezerv new capacity
   void Reserve(size_type new_cap) {
     if (new_cap <= m_capacity_) return;
