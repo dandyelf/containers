@@ -21,11 +21,11 @@ class Vector {
   using size_type = size_t;
   // public methods
   // default constructor (simplified syntax for assigning values to attributes)
-  Vector() {}
+  Vector() noexcept {}
 
   // parametrized constructor for fixed size vector (explicit was used in order
   // to avoid automatic type conversion)
-  Vector(size_type n) : m_size_(n), m_capacity_(n), arr(nullptr) {
+  explicit Vector(size_type n) : m_size_(n), m_capacity_(n), arr(nullptr) {
     CreateVector();
   }
 
@@ -50,7 +50,7 @@ class Vector {
   }
 
   // move constructor with simplified syntax
-  Vector(Vector &&v)
+  Vector(Vector &&v) noexcept
       : m_size_(v.m_size_), m_capacity_(v.m_capacity_), arr(v.arr) {
     v.arr = nullptr;
     v.m_size_ = 0;
