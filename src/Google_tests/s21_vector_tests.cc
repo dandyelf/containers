@@ -41,8 +41,14 @@ TEST(VectorTests, InitializerListConstructor) {
   s21::Vector<std::string> v2 = {s1, s2};
 }
 
+TEST(VectorTests, CopyConstructor) {
+  s21::Vector<std::string> v1 = {"111", "222"};
+  s21::Vector<std::string> v2(v1);
+  // std::string x(x);
+}
+
 TEST(VectorTests, PushBack) {
-  s21::Vector<std::string> v1(7);
+  s21::Vector<std::string> v1(4);
   std::string str("111");
   v1.Push_back(str);
   v1.Push_back(str);

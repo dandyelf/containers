@@ -44,8 +44,12 @@ class Vector {
   // copy constructor with simplified syntax
   Vector(const Vector &v) : m_size_(v.m_size_), m_capacity_(v.m_capacity_) {
     if (this != &v) {
-      CreateVector();
-      Reserve(m_capacity_);
+      T *arr =
+          reinterpret_cast<T *>(new unsigned char[m_capacity_ * sizeof(T)]);
+      size_t i = 0;
+      for (; i < m_size_; ++i) {
+        new (arr + i) T(arr[i]);  //  placement new
+      }
     }
     // std::memcpy(matrix_[i], other_p[i], (cols_ * sizeof(double)));
   }
