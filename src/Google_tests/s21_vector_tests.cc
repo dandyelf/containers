@@ -39,6 +39,7 @@ TEST(VectorTests, InitializerListConstructor) {
   std::string s1("111");
   std::string s2("222");
   s21::Vector<std::string> v2 = {s1, s2};
+  // s21::Vector<std::string
 }
 
 TEST(VectorTests, CopyConstructor) {
