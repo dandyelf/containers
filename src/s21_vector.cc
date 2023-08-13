@@ -44,14 +44,21 @@ class Vector {
   // copy constructor with simplified syntax
   Vector(const Vector &v) : m_size_(v.m_size_), m_capacity_(v.m_capacity_) {
     if (this != &v) {
-      T *arr =
-          reinterpret_cast<T *>(new unsigned char[m_capacity_ * sizeof(T)]);
-      size_t i = 0;
-      for (; i < m_size_; ++i) {
-        new (arr + i) T(arr[i]);  //  placement new
+      T *newarr = reinterpret_cast<T *>(new unsigned char[m_size_ * sizeof(T)]);
+      size_type i = 0;
+      try {
+        for (; i < m_size_; ++i) {
+          new (newarr + i) T(v.arr[i]);  //  placement new
+        }
+      } catch (...) {
+        for (size_type j = 0; j < i; ++j) {
+          (newarr + j)->~T();
+        }
+        delete[] reinterpret_cast<unsigned char *>(arr);
+        throw;
       }
+      this->arr = newarr;
     }
-    // std::memcpy(matrix_[i], other_p[i], (cols_ * sizeof(double)));
   }
 
   // move constructor with simplified syntax
