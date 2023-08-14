@@ -4,9 +4,6 @@
 
 #include "s21_vector.h"
 
-template <class Iter>
-class VectorIterator;
-
 namespace s21 {
 template <typename T>
 class Vector {
