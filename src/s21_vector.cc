@@ -46,24 +46,28 @@ class Vector {
 
   Vector(const Vector &v) : m_size_(v.m_size_), m_capacity_(v.m_capacity_) {
     if (this != &v) {
-      // Create an object of std::allocator for type T
-      std::allocator<value_type> allocator;
-      // Allocate memory for the new array
-      T *newarr = allocator.allocate(m_capacity_);
+      std::allocator<value_type>
+          allocator;  // Create an object of std::allocator for type T
+      using allocator_traits = std::allocator_traits<decltype(allocator)>;
+
+      T *newarr = allocator_traits::allocate(
+          allocator, m_capacity_);  // Allocate memory for the new array
 
       size_type i = 0;
       try {
         for (; i < m_size_; ++i) {
-          // Use allocator to construct objects of type T
-          allocator.construct(newarr + i, v.arr[i]);
+          allocator_traits::construct(
+              allocator, newarr + i,
+              v.arr[i]);  // Use allocator_traits to construct objects of type T
         }
       } catch (...) {
         for (size_type j = 0; j < i; ++j) {
-          // Use allocator to destroy objects of type T
-          allocator.destroy(newarr + j);
+          allocator_traits::destroy(
+              allocator,
+              newarr + j);  // Use allocator_traits to destroy objects of type T
         }
-        // Deallocate the allocated memory
-        allocator.deallocate(newarr, m_capacity_);
+        allocator_traits::deallocate(
+            allocator, newarr, m_capacity_);  // Deallocate the allocated memory
         throw;
       }
       this->arr = newarr;
@@ -79,13 +83,20 @@ class Vector {
   };
 
   ~Vector() {
-    // Create an object of std::allocator for type T
-    std::allocator<value_type> allocator;
+    std::allocator<T>
+        allocator;  // Create an object of std::allocator for type T
+
+    using allocator_traits = std::allocator_traits<decltype(allocator)>;
+
     for (size_type j = 0; j < m_size_; ++j) {
-      allocator.destroy(arr + j);  // Use allocator to destroy objects of type T
+      allocator_traits::destroy(
+          allocator,
+          arr + j);  // Use allocator_traits to destroy objects of type T
     }
-    allocator.deallocate(arr, m_capacity_);  // Deallocate the allocated memory
+    allocator_traits::deallocate(
+        allocator, arr, m_capacity_);  // Deallocate the allocated memory
   }
+
   // size getter
   size_type Size() const noexcept { return m_size_; }
   // capacity getter
@@ -117,23 +128,40 @@ class Vector {
   // rezerv new capacity
   void Reserve(size_type new_cap) {
     if (new_cap <= m_capacity_) return;
-    T *newarr = reinterpret_cast<T *>(new unsigned char[new_cap * sizeof(T)]);
+
+    std::allocator<value_type>
+        allocator;  // Create an object of std::allocator for type T
+    using allocator_traits = std::allocator_traits<decltype(allocator)>;
+    T *newarr = allocator_traits::allocate(
+        allocator, new_cap);  // Allocate memory for the new array
+
     size_type i = 0;
     try {
       for (; i < m_size_; ++i) {
-        new (newarr + i) T(std::move(arr[i]));  //  placement new
+        allocator_traits::construct(
+            allocator, newarr + i,
+            std::move(arr[i]));  // Use allocator_traits to construct objects of
+                                 // type T
       }
     } catch (...) {
       for (size_type j = 0; j < i; ++j) {
-        (newarr + j)->~T();
+        allocator_traits::destroy(
+            allocator,
+            newarr + j);  // Use allocator_traits to destroy objects of type T
       }
-      delete[] reinterpret_cast<unsigned char *>(newarr);
+      allocator_traits::deallocate(allocator, newarr,
+                                   new_cap);  // Deallocate the allocated memory
       throw;
     }
+
     for (size_type m = 0; m < m_size_; ++m) {
-      (arr + m)->~T();
+      allocator_traits::destroy(allocator,
+                                arr + m);  // Use allocator_traits to destroy
+                                           // objects of type T in the old array
     }
-    delete[] reinterpret_cast<unsigned char *>(arr);
+    allocator_traits::deallocate(
+        allocator, arr, m_capacity_);  // Deallocate the memory of the old array
+
     arr = newarr;
     m_capacity_ = new_cap;
   }
@@ -152,18 +180,11 @@ class Vector {
     return &tmp;
   }
 
-  // size_type max_size() const {
-  //   char bits = 63;
-  //   if (sizeof(void *) == 4) {
-  //     bits = 31;
-  //   }
-  //   return static_cast<size_type>(pow(2, bits)) / sizeof(value_type) - 1;
-  // }
-
   size_type max_size() const {
-    std::allocator<value_type> allocator;
-    // size_type tmp = allocator.max_size();
-    return allocator.max_size();
+    std::allocator<value_type>
+        allocator;  // Create an object of std::allocator for type T
+    using allocator_traits = std::allocator_traits<decltype(allocator)>;
+    return allocator_traits::max_size(allocator);
   }
 
  private:
@@ -182,24 +203,29 @@ class Vector {
 
   void CreateVector() {
     std::allocator<value_type>
-        allocator;  // Создаем объект std::allocator для типа T
-    arr = allocator.allocate(m_size_);  // Выделяем память для массива типа T
+        allocator;  // Create an object of std::allocator for type T
+    using allocator_traits = std::allocator_traits<decltype(allocator)>;
+    T *newarr = allocator_traits::allocate(
+        allocator, m_size_);  // Allocate memory for the array
 
     size_type i = 0;
     try {
       for (; i < m_size_; ++i) {
-        allocator.construct(
-            arr + i,
-            T());  // Используем allocator для конструирования объектов типа T
+        allocator_traits::construct(
+            allocator, newarr + i,
+            T());  // Use allocator_traits to construct objects of type T
       }
     } catch (...) {
       for (size_type j = 0; j < i; ++j) {
-        allocator.destroy(
-            arr + j);  // Используем allocator для уничтожения объектов типа T
+        allocator_traits::destroy(
+            allocator,
+            newarr + j);  // Use allocator_traits to destroy objects of type T
       }
-      allocator.deallocate(arr, m_size_);  // Освобождаем выделенную память
+      allocator_traits::deallocate(allocator, newarr,
+                                   m_size_);  // Deallocate the allocated memory
       throw;
     }
+    arr = newarr;
   }
 };  // class Vector
 }  // namespace s21
