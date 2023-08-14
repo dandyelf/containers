@@ -39,6 +39,7 @@ TEST(VectorTests, InitializerListConstructor) {
   std::string s1("111");
   std::string s2("222");
   s21::Vector<std::string> v2 = {s1, s2};
+  ASSERT_EQ("111", v1.At(0));
 }
 
 TEST(VectorTests, CopyConstructor) {
@@ -59,6 +60,8 @@ TEST(VectorTests, PushBack) {
   v1.Push_back(str);
   v1.Push_back(str);
   v1.Push_back(str);
+  ASSERT_EQ("111", v1.At(5));
+  ASSERT_EQ("", v1.At(0));
 }
 
 TEST(VectorTests, Reserve) {
