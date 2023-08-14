@@ -7,23 +7,15 @@
 namespace s21 {
 template <typename T>
 class List {
+  //   template <typename value_type>
+  //   class ListIterator;
   using value_type = T;
   using reference = T&;
   using const_reference = const T&;
   using size_type = std::size_t;
+  struct Node;
 
   // public attribures
- public:
- private:
-  struct Node {
-    value_type value_;
-    Node* prev_;
-    Node* next_;
-
-    Node(const value_type& value)
-        : value_(value), prev_(nullptr), next_(nullptr) {}
-  };
-
  public:
   template <typename value_type>
   class ListIterator {
@@ -86,5 +78,13 @@ class List {
 
   using iterator = ListIterator<T>;
   //   using const_iterator = ListConstIterator<T>;
+ private:
+  struct Node {
+    value_type value_;
+    Node* prev_;
+    Node* next_;
+    Node(const value_type& value)
+        : value_(value), prev_(nullptr), next_(nullptr) {}
+  };
 };  // class List
 }  // namespace s21

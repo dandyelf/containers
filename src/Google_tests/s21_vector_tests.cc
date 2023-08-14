@@ -117,7 +117,6 @@ TEST(VectorTests, StdVector) {
 TEST(VectorTests, MaxSize) {
   std::vector<std::string> v1 = {"111", "222"};
   s21::Vector<std::string> v2 = {"1", "2"};
-  std::cout << v1.max_size() << std::endl << v2.max_size() << std::endl;
   ASSERT_EQ(v1.max_size(), v2.max_size());
 }
 
