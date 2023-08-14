@@ -39,13 +39,17 @@ TEST(VectorTests, InitializerListConstructor) {
   std::string s1("111");
   std::string s2("222");
   s21::Vector<std::string> v2 = {s1, s2};
-  // s21::Vector<std::string
 }
 
 TEST(VectorTests, CopyConstructor) {
   s21::Vector<std::string> v1 = {"111", "222"};
   s21::Vector<std::string> v2(v1);
-  // std::string x(x);
+}
+
+TEST(VectorTests, MoveConstructor) {
+  s21::Vector<std::string> v1 = {"111", "222"};
+  s21::Vector<std::string> v2(std::move(v1));
+  ASSERT_EQ(0, v1.Capacity());
 }
 
 TEST(VectorTests, PushBack) {
@@ -76,11 +80,13 @@ TEST(VectorTests, BeginEnd) {
   ju.At(1) = "222";
   ju.At(2) = "333";
   s21::Vector<std::string>::iterator ite = ju.begin();
-  std::cout << *ite << std::endl;
+  ASSERT_EQ("111", *ite);
   int i = 0;
+  size_t j = 0;
   for (auto it = ju.begin(); it != ju.end(); it++) {
-    std::cout << *it << std::endl;
+    ASSERT_EQ(ju.At(j), *it);
     i++;
+    j++;
   }
 }
 
@@ -103,6 +109,12 @@ TEST(VectorTests, StdVector) {
   std::string s1("111");
   std::string s2("222");
   std::vector<std::string> v2 = {s1, s2};
+}
+
+TEST(VectorTests, MaxSize) {
+  std::vector<std::string> v1 = {"111", "222"};
+  s21::Vector<std::string> v2 = {"111", "222"};
+  ASSERT_EQ(v1.max_size(), v2.max_size());
 }
 
 }  // namespace

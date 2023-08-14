@@ -4,6 +4,7 @@
 #ifndef CONTAINERS_SRC_S21_VECTOR_H_
 #define CONTAINERS_SRC_S21_VECTOR_H_
 
+#include <cmath>
 #include <iostream>
-
+#include <memory>
 #endif  // CONTAINERS_SRC_S21_VECTOR_H_

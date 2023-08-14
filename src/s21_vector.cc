@@ -26,6 +26,10 @@ class Vector {
   // parametrized constructor for fixed size vector (explicit was used in order
   // to avoid automatic type conversion)
   explicit Vector(size_type n) : m_size_(n), m_capacity_(n), arr(nullptr) {
+    if (this->max_size() < m_capacity_) {
+      throw std::out_of_range(
+          "cannot create s21::vector larger than max_size()");
+    }
     CreateVector();
   }
 
@@ -34,7 +38,7 @@ class Vector {
       : Vector(items.size()) {
     int i = 0;
     for (auto it = items.begin(); it != items.end(); it++) {
-      arr[i] = std::move(*it);
+      arr[i] = *it;
       i++;
     }
     m_size_ = items.size();
@@ -42,19 +46,27 @@ class Vector {
   }
 
   // copy constructor with simplified syntax
+
   Vector(const Vector &v) : m_size_(v.m_size_), m_capacity_(v.m_capacity_) {
     if (this != &v) {
-      T *newarr = reinterpret_cast<T *>(new unsigned char[m_size_ * sizeof(T)]);
+      // Create an object of std::allocator for type T
+      std::allocator<value_type> allocator;
+      // Allocate memory for the new array
+      T *newarr = allocator.allocate(m_capacity_);
+
       size_type i = 0;
       try {
         for (; i < m_size_; ++i) {
-          new (newarr + i) T(v.arr[i]);  //  placement new
+          // Use allocator to construct objects of type T
+          allocator.construct(newarr + i, v.arr[i]);
         }
       } catch (...) {
         for (size_type j = 0; j < i; ++j) {
-          (newarr + j)->~T();
+          // Use allocator to destroy objects of type T
+          allocator.destroy(newarr + j);
         }
-        delete[] reinterpret_cast<unsigned char *>(arr);
+        // Deallocate the allocated memory
+        allocator.deallocate(newarr, m_capacity_);
         throw;
       }
       this->arr = newarr;
@@ -66,13 +78,16 @@ class Vector {
       : m_size_(v.m_size_), m_capacity_(v.m_capacity_), arr(v.arr) {
     v.arr = nullptr;
     v.m_size_ = 0;
+    v.m_capacity_ = 0;
   };
-  // destructor
+
   ~Vector() {
+    // Create an object of std::allocator for type T
+    std::allocator<value_type> allocator;
     for (size_type j = 0; j < m_size_; ++j) {
-      (arr + j)->~T();
+      allocator.destroy(arr + j);  // Use allocator to destroy objects of type T
     }
-    delete[] reinterpret_cast<unsigned char *>(arr);
+    allocator.deallocate(arr, m_capacity_);  // Deallocate the allocated memory
   }
   // size getter
   size_type Size() const noexcept { return m_size_; }
@@ -140,6 +155,20 @@ class Vector {
     return &tmp;
   }
 
+  // size_type max_size() const {
+  //   char bits = 63;
+  //   if (sizeof(void *) == 4) {
+  //     bits = 31;
+  //   }
+  //   return static_cast<size_type>(pow(2, bits)) / sizeof(value_type) - 1;
+  // }
+
+  size_type max_size() const {
+    std::allocator<value_type> allocator;
+    // size_type tmp = allocator.max_size();
+    return allocator.max_size();
+  }
+
  private:
   // private attributes
   size_type m_size_{};
@@ -155,19 +184,25 @@ class Vector {
   }
 
   void CreateVector() {
-    arr = reinterpret_cast<T *>(new unsigned char[m_size_ * sizeof(T)]);
+    std::allocator<value_type>
+        allocator;  // Создаем объект std::allocator для типа T
+    arr = allocator.allocate(m_size_);  // Выделяем память для массива типа T
+
     size_type i = 0;
     try {
       for (; i < m_size_; ++i) {
-        new (arr + i) T();  //  placement new
+        allocator.construct(
+            arr + i,
+            T());  // Используем allocator для конструирования объектов типа T
       }
     } catch (...) {
       for (size_type j = 0; j < i; ++j) {
-        (arr + j)->~T();
+        allocator.destroy(
+            arr + j);  // Используем allocator для уничтожения объектов типа T
       }
-      delete[] reinterpret_cast<unsigned char *>(arr);
+      allocator.deallocate(arr, m_size_);  // Освобождаем выделенную память
       throw;
     }
   }
-};
+};  // class Vector
 }  // namespace s21
