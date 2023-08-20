@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "../s21_vector.cc"
+#include "../s21_vector.h"
 #include "gtest/gtest.h"
 
 namespace s21vector {

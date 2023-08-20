@@ -12,17 +12,12 @@ GT_FLAGS = -lgtest
 
 OS := $(shell uname -s)
 
-all: s21_containers.a
+all: test
 
 #  Google tests
-test: s21_containers.a $(GT_OBJS)
-	$(CXX) $(CXXFLAGS) $(GT_OBJS) $(BUILD_DIR)/$(TARGET) -o $(BUILD_DIR)/test.out $(GT_FLAGS)
+test: $(GT_OBJS)
+	$(CXX) $(CXXFLAGS) $(GT_OBJS) -o $(BUILD_DIR)/test.out $(GT_FLAGS)
 	./$(BUILD_DIR)/test.out
-
-# Final build
-$(TARGET): $(OBJS)
-	ar -rc $(BUILD_DIR)/$(TARGET) $(OBJS)
-	ranlib $(BUILD_DIR)/$(TARGET)
 
 # Build step for C++ source
 $(BUILD_DIR)/%.cc.o: %.cc
@@ -34,8 +29,8 @@ clean:
 	rm -rf $(BUILD_DIR)/*
 
 clang:
-	clang-format -n src/*.cc src/*.h src/Google_tests/*.cc
-	clang-format -i src/*.cc src/*.h src/Google_tests/*.cc
+	clang-format -n src/*.h src/Google_tests/*.cc
+	clang-format -i src/*.h src/Google_tests/*.cc
 
 start:
 	./$(BUILD_DIR)/test.out
