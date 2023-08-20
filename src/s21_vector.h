@@ -21,7 +21,7 @@ class Vector {
   using const_iterator = const T *;
   using size_type = size_t;
   std::allocator<value_type>
-      allocator;  // Create an object of std::allocator for type T
+      allocator{};  // Create an object of std::allocator for type T
   // public methods
   // default constructor (simplified syntax for assigning values to attributes)
   Vector() noexcept {}

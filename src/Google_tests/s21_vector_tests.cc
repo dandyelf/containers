@@ -35,7 +35,7 @@ TEST(VectorTests, ParamConstructor) {
 }
 
 TEST(VectorTests, InitializerListConstructor) {
-  s21::Vector<std::string> v1 = {"111", "222"};
+  s21::Vector<std::string> v1 = {"111", "222", "333"};
   std::string s1("111");
   std::string s2("222");
   s21::Vector<std::string> v2 = {s1, s2};

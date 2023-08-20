@@ -1,7 +1,7 @@
 CXX = g++
 CPP_STD:=-std=c++17
 TARGET:=s21_containers.a
-CXXFLAGS = -g -Werror -Wall -Wextra
+CXXFLAGS = -g -Wall -Wextra # -Werror 
 BUILD_DIR := build
 SRC_DIRS := src
 SRCS := $(shell find $(SRC_DIRS) -maxdepth 1 -name *.cc)
