@@ -24,7 +24,7 @@ class Vector {
       allocator{};  // Create an object of std::allocator for type T
   // public methods
   // default constructor (simplified syntax for assigning values to attributes)
-  Vector() noexcept {}
+  Vector() noexcept {};
 
   // parametrized constructor for fixed size vector (explicit was used in order
   // to avoid automatic type conversion)

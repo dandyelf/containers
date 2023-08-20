@@ -11,7 +11,7 @@ namespace tests {
 namespace {
 
 // The fixture for testing class Foo.
-class s21binaryTreeTests : public ::testing::Test {
+class s21BinaryTreeTests : public ::testing::Test {
  protected:
   // You can remove any or all of the following functions if their bodies would
   // be empty.
@@ -22,7 +22,7 @@ class s21binaryTreeTests : public ::testing::Test {
 // Tests that the Foo::Bar() method does Abc.
 TEST(binaryTreeTests, StandartConstructor) { s21::BinaryTree<int> A; }
 
-TEST(BinaryTreeTests, ParamConstructor) { s21::BinaryTree<int> A; }
+TEST(BinaryTreeTests, Insert) { s21::BinaryTree<int> A; }
 
 TEST(BinaryTreeTests, InitializerListConstructor) {}
 

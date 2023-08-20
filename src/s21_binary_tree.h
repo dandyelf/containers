@@ -19,8 +19,8 @@ class BinaryTree {
   using size_type = std::size_t;
 
  public:
-  //  private:
-
+  BinaryTree(){};
+  ~BinaryTree(){};
   class Node {
    public:
     int key_{};
@@ -36,9 +36,20 @@ class BinaryTree {
       if (node.left_ == nullptr) {
         Node tmp(key, value);
         node.left_ = tmp;
+      } else {
+        insert(node.left, key, value);
+      }
+    if (key >= node.key_)
+      if (node.right_ == nullptr) {
+        Node tmp(key, value);
+        node.right = tmp;
+      } else {
+        insert(node.right_, key, value);
       }
   }
 
+ private:
+  Node* root;
 };  // class List
 }  // namespace s21
 
